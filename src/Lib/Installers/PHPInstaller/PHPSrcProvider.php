@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace PHPManager\PHPManager\Lib\PHPInstaller;
+namespace PHPManager\PHPManager\Lib\Installers\PHPInstaller;
 
 use PHPManager\PHPManager\Lib\Interfaces\Provider;
 

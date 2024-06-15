@@ -7,14 +7,13 @@ use Fidry\Console\Command\Configuration;
 use Fidry\Console\IO;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
-use PHPManager\PHPManager\Lib\ComposerInstaller\ComposerInstaller;
-use PHPManager\PHPManager\Lib\ComposerInstaller\ComposerProvider;
-use PHPManager\PHPManager\Lib\PHPInstaller\PHPInstaller;
-use PHPManager\PHPManager\Lib\PHPInstaller\PHPInstallerExecutor;
-use PHPManager\PHPManager\Lib\PHPInstaller\PHPSrcProvider;
+use PHPManager\PHPManager\Lib\Installers\ComposerInstaller\ComposerInstaller;
+use PHPManager\PHPManager\Lib\Installers\ComposerInstaller\ComposerProvider;
+use PHPManager\PHPManager\Lib\Installers\PHPInstaller\PHPInstaller;
+use PHPManager\PHPManager\Lib\Installers\PHPInstaller\PHPInstallerExecutor;
+use PHPManager\PHPManager\Lib\Installers\PHPInstaller\PHPSrcProvider;
 use Safe\Exceptions\DirException;
 use Symfony\Component\Filesystem\Filesystem;
-
 use function Safe\getcwd;
 
 class InstallCommand implements Command

@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPManager\PHPManager\Lib\ComposerInstaller;
+namespace PHPManager\PHPManager\Lib\Installers\ComposerInstaller;
 
 use PHPManager\PHPManager\Lib\Interfaces\Provider;
 
