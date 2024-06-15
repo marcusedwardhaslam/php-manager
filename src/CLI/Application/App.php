@@ -4,6 +4,7 @@ namespace PHPManager\PHPManager\CLI\Application;
 
 use Fidry\Console\Application\BaseApplication;
 use PHPManager\PHPManager\CLI\Commands\InstallCommand;
+use PHPManager\PHPManager\CLI\Commands\RunCommand;
 use Symfony\Component\Filesystem\Filesystem;
 
 class App extends BaseApplication
@@ -25,6 +26,7 @@ class App extends BaseApplication
             new InstallCommand(
                 new Filesystem(),
             ),
+            new RunCommand(),
         ];
     }
 }

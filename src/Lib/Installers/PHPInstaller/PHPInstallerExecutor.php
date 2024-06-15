@@ -19,14 +19,14 @@ final class PHPInstallerExecutor
     {
         return new Process([
             './configure',
-            '--without-iconv',
+            '--with-iconv=/opt/homebrew/opt/libiconv',
         ]);
     }
 
     public function make(): Process
     {
         $process = new Process([
-            'make',
+            'make -j 8',
         ]);
         $process->setTimeout(null);
 
