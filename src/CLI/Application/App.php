@@ -4,6 +4,7 @@ namespace PHPManager\PHPManager\CLI\Application;
 
 use Fidry\Console\Application\BaseApplication;
 use PHPManager\PHPManager\CLI\Commands\InstallCommand;
+use Symfony\Component\Filesystem\Filesystem;
 
 class App extends BaseApplication
 {
@@ -21,7 +22,9 @@ class App extends BaseApplication
     public function getCommands(): array
     {
         return [
-            new InstallCommand(),
+            new InstallCommand(
+                new Filesystem(),
+            ),
         ];
     }
 }
