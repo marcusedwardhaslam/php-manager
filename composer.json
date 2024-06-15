@@ -1,0 +1,21 @@
+{
+    "name": "php-manager/php-manager",
+    "description": "TODO",
+    "type": "project",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "PhpManager\\PhpManager\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Marcus Haslam"
+        },
+        {
+            "name": "Théo FIDRY",
+            "email": "theo.fidry@gmail.com"
+        }
+    ],
+    "require": {}
+}
