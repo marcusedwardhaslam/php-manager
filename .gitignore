@@ -1,6 +1,7 @@
 /.envrc.local
 /.direnv/
 /.idea/
+/.php-manager/
 /.phpunit.result.cache
 /dist/
 /vendor/

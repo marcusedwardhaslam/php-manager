@@ -6,7 +6,7 @@ namespace PHPManager\PHPManager\Lib\PHPInstaller;
 
 use Symfony\Component\Process\Process;
 
-final class ProcessExecutor
+final class PHPInstallerExecutor
 {
     public function buildConfiguration(): Process
     {

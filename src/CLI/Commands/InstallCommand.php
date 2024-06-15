@@ -6,10 +6,15 @@ use Fidry\Console\Command\Command;
 use Fidry\Console\Command\Configuration;
 use Fidry\Console\IO;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
+use PHPManager\PHPManager\Lib\ComposerInstaller\ComposerInstaller;
+use PHPManager\PHPManager\Lib\ComposerInstaller\ComposerProvider;
 use PHPManager\PHPManager\Lib\PHPInstaller\PHPInstaller;
+use PHPManager\PHPManager\Lib\PHPInstaller\PHPInstallerExecutor;
 use PHPManager\PHPManager\Lib\PHPInstaller\PHPSrcProvider;
-use PHPManager\PHPManager\Lib\PHPInstaller\ProcessExecutor;
+use Safe\Exceptions\DirException;
 use Symfony\Component\Filesystem\Filesystem;
+
 use function Safe\getcwd;
 
 class InstallCommand implements Command
@@ -29,21 +34,34 @@ class InstallCommand implements Command
         );
     }
 
+    /**
+     * @throws DirException
+     * @throws GuzzleException
+     */
     public function execute(IO $io): int
     {
-        $io->write('Let\'s install PHP!');
+        $io->writeln('Let\'s install PHP!');
 
         $cwd = getcwd();
 
-        $installer = new PHPInstaller(
+        $phpInstaller = new PHPInstaller(
             $cwd .'/dist/build',
             $cwd .'/.php-manager',
             $this->filesystem,
             new Client(),
             new PHPSrcProvider(),
-            new ProcessExecutor(),
+            new PHPInstallerExecutor(),
         );
-        $installer->install($io);
+        $phpInstaller->install($io);
+
+        $composerInstaller = new ComposerInstaller(
+            $cwd .'/dist/composer',
+            $cwd .'/.php-manager',
+            $this->filesystem,
+            new Client(),
+            new ComposerProvider(),
+        );
+        $composerInstaller->install($io);
 
         return 0;
     }
