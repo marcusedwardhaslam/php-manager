@@ -1,3 +1,5 @@
-/.direnv/
 /.envrc.local
+/.direnv/
+.idea/
+/.phpunit.result.cache
 /vendor/
