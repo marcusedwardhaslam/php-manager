@@ -51,7 +51,7 @@ jobs:
                     ini-values: display_errors=On, error_reporting=-1
                     tools: ${{ matrix.tools }}
                     coverage: none
-                    extensions: none
+                    extensions: :iconv
 
             -   name: Remove the configured platform on non-locked dependencies
                 if: ${{ matrix.php.dependency != 'locked' }}
