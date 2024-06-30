@@ -1,0 +1,36 @@
+{
+    "name": "php-manager/php-manager",
+    "description": "TODO",
+    "type": "project",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "PHPManager\\PHPManager\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "PHPManager\\PHPManager\\Tests\\": "tests/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Marcus Haslam",
+            "email": "marcusedwardhaslam@gmail.com"
+        },
+        {
+            "name": "Théo FIDRY",
+            "email": "theo.fidry@gmail.com"
+        }
+    ],
+    "require": {
+        "fidry/console": "^0.6.10",
+        "symfony/filesystem": "^7.1",
+        "guzzlehttp/guzzle": "^7.8",
+        "symfony/process": "^7.1",
+        "fidry/cpu-core-counter": "^1.1"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^11"
+    }
+}
