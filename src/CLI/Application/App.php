@@ -5,6 +5,8 @@ namespace PHPManager\PHPManager\CLI\Application;
 use Fidry\Console\Application\BaseApplication;
 use PHPManager\PHPManager\CLI\Commands\InstallCommand;
 use PHPManager\PHPManager\CLI\Commands\RunCommand;
+use PHPManager\PHPManager\CLI\Commands\UninstallCommand;
+use PHPManager\PHPManager\Lib\PHPManagerConfiguration;
 use Symfony\Component\Filesystem\Filesystem;
 
 class App extends BaseApplication
@@ -22,11 +24,20 @@ class App extends BaseApplication
 
     public function getCommands(): array
     {
+        $config = new PHPManagerConfiguration();
+        $fileSystem = new FileSystem();
         return [
             new InstallCommand(
-                new Filesystem(),
+                $config,
+                $fileSystem,
             ),
-            new RunCommand(),
+            new RunCommand(
+                $config,
+            ),
+            new UninstallCommand(
+                $config,
+                $fileSystem,
+            ),
         ];
     }
 }

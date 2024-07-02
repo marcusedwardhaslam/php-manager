@@ -12,6 +12,7 @@ use PHPManager\PHPManager\Lib\Installers\ComposerInstaller\ComposerProvider;
 use PHPManager\PHPManager\Lib\Installers\PHPInstaller\PHPInstaller;
 use PHPManager\PHPManager\Lib\Installers\PHPInstaller\PHPInstallerExecutor;
 use PHPManager\PHPManager\Lib\Installers\PHPInstaller\PHPSrcProvider;
+use PHPManager\PHPManager\Lib\PHPManagerConfiguration;
 use Safe\Exceptions\DirException;
 use Symfony\Component\Filesystem\Filesystem;
 use function Safe\getcwd;
@@ -19,8 +20,10 @@ use function Safe\getcwd;
 class InstallCommand implements Command
 {
     public function __construct(
-        private readonly Filesystem $filesystem,
-    ) {
+        private PHPManagerConfiguration $configuration,
+        private readonly Filesystem     $filesystem,
+    )
+    {
     }
 
     public function getConfiguration(): Configuration
@@ -44,8 +47,8 @@ class InstallCommand implements Command
         $cwd = getcwd();
 
         $phpInstaller = new PHPInstaller(
-            $cwd .'/dist/build',
-            $cwd .'/.php-manager',
+            $cwd . $this->configuration->distDirectory . '/build',
+            $cwd . $this->configuration->phpManagerDirectory,
             $this->filesystem,
             new Client(),
             new PHPSrcProvider(),
@@ -54,8 +57,8 @@ class InstallCommand implements Command
         $phpInstaller->install($io);
 
         $composerInstaller = new ComposerInstaller(
-            $cwd .'/dist/composer',
-            $cwd .'/.php-manager',
+            $cwd . $this->configuration->distDirectory . '/composer',
+            $cwd . $this->configuration->phpManagerDirectory,
             $this->filesystem,
             new Client(),
             new ComposerProvider(),

@@ -5,6 +5,7 @@ namespace PHPManager\PHPManager\CLI\Commands;
 use Fidry\Console\Command\Command;
 use Fidry\Console\Command\Configuration;
 use Fidry\Console\IO;
+use PHPManager\PHPManager\Lib\PHPManagerConfiguration;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\PhpProcess;
@@ -15,6 +16,11 @@ class RunCommand implements Command
 
     const string BINARY = 'binary';
     const POSARGS = 'posargs';
+
+    function __construct(private PHPManagerConfiguration $config)
+    {
+
+    }
 
     public function getConfiguration(): Configuration
     {
@@ -44,7 +50,7 @@ class RunCommand implements Command
     {
         // TODO: Implement execute() method.
         $bin = $io->getTypedArgument(self::BINARY)->asString();
-        $process = new Process(["./.php-manager/php/php", $bin, ...$io->getTypedArgument(self::POSARGS)->asRaw()]);
+        $process = new Process(["./{$this->config->phpManagerDirectory}/php/php", $bin, ...$io->getTypedArgument(self::POSARGS)->asRaw()]);
         if ($io->isVerbose()) {
             $process->start(
                 function ($type, $buffer) use ($io) {
