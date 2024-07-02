@@ -3,6 +3,8 @@
 namespace PHPManager\PHPManager\CLI\Application;
 
 use Fidry\Console\Application\BaseApplication;
+use Fidry\CpuCoreCounter\CpuCoreCounter;
+use Fidry\CpuCoreCounter\Finder\FinderRegistry;
 use PHPManager\PHPManager\CLI\Commands\InstallCommand;
 use PHPManager\PHPManager\CLI\Commands\RunCommand;
 use PHPManager\PHPManager\CLI\Commands\UninstallCommand;
@@ -30,6 +32,7 @@ class App extends BaseApplication
             new InstallCommand(
                 $config,
                 $fileSystem,
+                new CpuCoreCounter(FinderRegistry::getDefaultLogicalFinders()),
             ),
             new RunCommand(
                 $config,
@@ -37,6 +40,7 @@ class App extends BaseApplication
             new UninstallCommand(
                 $config,
                 $fileSystem,
+                new Filesystem(),
             ),
         ];
     }
