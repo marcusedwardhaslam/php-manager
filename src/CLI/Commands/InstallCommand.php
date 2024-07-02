@@ -5,6 +5,7 @@ namespace PHPManager\PHPManager\CLI\Commands;
 use Fidry\Console\Command\Command;
 use Fidry\Console\Command\Configuration;
 use Fidry\Console\IO;
+use Fidry\CpuCoreCounter\CpuCoreCounter;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use PHPManager\PHPManager\Lib\Installers\ComposerInstaller\ComposerInstaller;
@@ -13,13 +14,20 @@ use PHPManager\PHPManager\Lib\Installers\PHPInstaller\PHPInstaller;
 use PHPManager\PHPManager\Lib\Installers\PHPInstaller\PHPInstallerExecutor;
 use PHPManager\PHPManager\Lib\Installers\PHPInstaller\PHPSrcProvider;
 use Safe\Exceptions\DirException;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Filesystem\Filesystem;
+use function min;
 use function Safe\getcwd;
+use const PHP_INT_MAX;
 
 class InstallCommand implements Command
 {
+    private const MAX_CORE_COUNT_OPTION = 'max-core-count';
+
     public function __construct(
         private readonly Filesystem $filesystem,
+        private readonly CpuCoreCounter $coreCounter,
     ) {
     }
 
@@ -30,6 +38,14 @@ class InstallCommand implements Command
             'Installs a local version of PHP, Composer and project dependencies',
             'This will provide help to the user',
             [],
+            [
+                new InputOption(
+                    self::MAX_CORE_COUNT_OPTION,
+                    null,
+                    InputOption::VALUE_REQUIRED,
+                    'The maximum number of cores to use for compilation. Defaults to the maximum number of cores available on the host system.',
+                ),
+            ],
         );
     }
 
@@ -43,13 +59,18 @@ class InstallCommand implements Command
 
         $cwd = getcwd();
 
+        $coreCount = min(
+            $io->getOption(self::MAX_CORE_COUNT_OPTION)->asNullablePositiveInteger() ?? PHP_INT_MAX,
+            $this->coreCounter->getCount(),
+        );
+
         $phpInstaller = new PHPInstaller(
             $cwd .'/dist/build',
             $cwd .'/.php-manager',
             $this->filesystem,
             new Client(),
             new PHPSrcProvider(),
-            new PHPInstallerExecutor(),
+            new PHPInstallerExecutor($coreCount),
         );
         $phpInstaller->install($io);
 

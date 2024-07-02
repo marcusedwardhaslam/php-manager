@@ -3,6 +3,8 @@
 namespace PHPManager\PHPManager\CLI\Application;
 
 use Fidry\Console\Application\BaseApplication;
+use Fidry\CpuCoreCounter\CpuCoreCounter;
+use Fidry\CpuCoreCounter\Finder\FinderRegistry;
 use PHPManager\PHPManager\CLI\Commands\InstallCommand;
 use PHPManager\PHPManager\CLI\Commands\RunCommand;
 use Symfony\Component\Filesystem\Filesystem;
@@ -24,7 +26,9 @@ class App extends BaseApplication
     {
         return [
             new InstallCommand(
-                new Filesystem(),
+                new Filesystem(
+                ),
+                new CpuCoreCounter(FinderRegistry::getDefaultLogicalFinders()),
             ),
             new RunCommand(),
         ];

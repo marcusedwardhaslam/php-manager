@@ -8,6 +8,15 @@ use Symfony\Component\Process\Process;
 
 final class PHPInstallerExecutor
 {
+    /**
+     * @param positive-int $cpuCoreCount
+     */
+    public function __construct(
+        private readonly int $cpuCoreCount,
+    ) {
+
+    }
+
     public function buildConfiguration(): Process
     {
         return new Process([
@@ -26,7 +35,8 @@ final class PHPInstallerExecutor
     public function make(): Process
     {
         $process = new Process([
-            'make -j 8',
+            'make',
+            '--jobs='.$this->cpuCoreCount,
         ]);
         $process->setTimeout(null);
 
