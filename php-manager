@@ -1,0 +1,9 @@
+#!/usr/bin/env php
+<?php
+
+require_once __DIR__ . '/vendor/autoload.php';
+
+use Fidry\Console\Application\ApplicationRunner;
+use PHPManager\PHPManager\CLI\Application\App;
+
+ApplicationRunner::runApplication(new App());
