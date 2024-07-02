@@ -2,7 +2,7 @@
          xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
          bootstrap="vendor/autoload.php"
          colors="true"
-         cacheResultFile="dist/.phpunit.result.cache"
+         cacheDirectory="dist/phpunit-cache"
 >
     <testsuites>
         <testsuite name="PHP Manager test suite">

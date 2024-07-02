@@ -6,6 +6,10 @@ OS := $(shell uname)
 ERROR_COLOR := "\033[41m"
 NO_COLOR := "\033[0m"
 
+PHPUNIT_BIN := vendor/bin/phpunit
+PHPUNIT := $(PHPUNIT_BIN)
+
+
 .DEFAULT_GOAL := help
 
 .PHONY: help
@@ -14,11 +18,27 @@ help:
 	@grep -F -h "##" $(MAKEFILE_LIST) | grep -F -v "grep -F" | sed -e 's/\\$$//' | sed -e 's/##//' | awk 'BEGIN {FS = ":"}; {printf "\033[33m%s:\033[0m%s\n", $$1, $$2}'
 
 
+.PHONY: test
+test:	## Runs the tests
+test: phpunit
+
+.PHONY: phpunit
+phpunit: vendor $(PHPUNIT_BIN)
+	$(MAKE) _phpunit
+
+.PHONY: _phpunit
+_phpunit:
+	$(PHPUNIT)
+
+.PHONY: vendor_install
+vendor_install:
+	composer install --ansi
+	touch -c vendor
 
 vendor: composer.lock
-	eval $(COMPOSER) install --no-scripts
-	bash .makefile/touch.sh "$@"
+	composer install --ansi
+	touch -c "$@"
 
 composer.lock: composer.json
-	@echo $(ERROR_COLOR)$(@) is not up to date.$(NO_COLOR)
+	composer update --lock --ansi
 	touch -c "$@"

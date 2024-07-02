@@ -4,4 +4,5 @@
 /.php-manager/
 /.phpunit.result.cache
 /dist/
+!/dist/.gitkeep
 /vendor/
