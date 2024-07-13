@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace PHPManager\PHPManager\CLI\Commands;
 
 use Fidry\Console\Command\Command;
-use Fidry\Console\Command\Configuration;
+use Fidry\Console\Command\Configuration as CommandConfiguration;
 use Fidry\Console\IO;
 use GuzzleHttp\Client;
 use PHPManager\PHPManager\Lib\Configuration;
@@ -19,9 +19,9 @@ class UninstallCommand implements Command
 
     }
 
-    public function getConfiguration(): Configuration
+    public function getConfiguration(): CommandConfiguration
     {
-        return new Configuration(
+        return new CommandConfiguration(
             'uninstall',
             'Uninstalls the local version of PHP, Composer and all other project dependencies',
             'This will provide help to the user',
@@ -34,9 +34,16 @@ class UninstallCommand implements Command
         $io->writeln("Removing PHP, Composer and all other project dependencies.");
 
         $cwd = getcwd();
-        $this->filesystem->remove([$cwd . $this->config->phpManagerDirectory, $cwd . $this->config->distDirectory]);
-        $io->writeln("Finished");
+        $phpManagerPath = $cwd . '/' . $this->config->phpManagerDirectory;
+        $distPath = $cwd . '/' . $this->config->distDirectory;
+        $paths = [$phpManagerPath, $distPath];
 
+        foreach ($paths as $path) {
+            $io->writeln("Removing $path");
+            $this->filesystem->remove($path);
+        }
+
+        $io->writeln("Finished");
         return 0;
     }
 }

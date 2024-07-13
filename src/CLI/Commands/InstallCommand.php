@@ -3,7 +3,7 @@
 namespace PHPManager\PHPManager\CLI\Commands;
 
 use Fidry\Console\Command\Command;
-use Fidry\Console\Command\Configuration;
+use Fidry\Console\Command\Configuration as CommandConfiguration;
 use Fidry\Console\IO;
 use Fidry\CpuCoreCounter\CpuCoreCounter;
 use GuzzleHttp\Client;
@@ -34,9 +34,9 @@ class InstallCommand implements Command
     {
     }
 
-    public function getConfiguration(): Configuration
+    public function getConfiguration(): CommandConfiguration
     {
-        return new Configuration(
+        return new CommandConfiguration(
             'install',
             'Installs a local version of PHP, Composer and project dependencies',
             'This will provide help to the user',
