@@ -13,7 +13,7 @@ use PHPManager\PHPManager\Lib\Installers\ComposerInstaller\ComposerProvider;
 use PHPManager\PHPManager\Lib\Installers\PHPInstaller\PHPInstaller;
 use PHPManager\PHPManager\Lib\Installers\PHPInstaller\PHPInstallerExecutor;
 use PHPManager\PHPManager\Lib\Installers\PHPInstaller\PHPSrcProvider;
-use PHPManager\PHPManager\Lib\PHPManagerConfiguration;
+use PHPManager\PHPManager\Lib\Configuration;
 use Safe\Exceptions\DirException;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
@@ -27,7 +27,7 @@ class InstallCommand implements Command
     private const MAX_CORE_COUNT_OPTION = 'max-core-count';
 
     public function __construct(
-        private PHPManagerConfiguration $configuration,
+        private Configuration           $configuration,
         private readonly Filesystem     $filesystem,
         private readonly CpuCoreCounter $coreCounter,
     )

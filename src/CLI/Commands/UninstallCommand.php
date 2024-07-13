@@ -8,13 +8,13 @@ use Fidry\Console\Command\Command;
 use Fidry\Console\Command\Configuration;
 use Fidry\Console\IO;
 use GuzzleHttp\Client;
-use PHPManager\PHPManager\Lib\PHPManagerConfiguration;
+use PHPManager\PHPManager\Lib\Configuration;
 use Symfony\Component\Filesystem\Filesystem;
 use function Safe\getcwd;
 
 class UninstallCommand implements Command
 {
-    function __construct(private PHPManagerConfiguration $config, private Filesystem $filesystem)
+    function __construct(private Configuration $config, private Filesystem $filesystem)
     {
 
     }

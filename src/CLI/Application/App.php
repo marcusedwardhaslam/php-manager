@@ -8,7 +8,7 @@ use Fidry\CpuCoreCounter\Finder\FinderRegistry;
 use PHPManager\PHPManager\CLI\Commands\InstallCommand;
 use PHPManager\PHPManager\CLI\Commands\RunCommand;
 use PHPManager\PHPManager\CLI\Commands\UninstallCommand;
-use PHPManager\PHPManager\Lib\PHPManagerConfiguration;
+use PHPManager\PHPManager\Lib\Configuration;
 use Symfony\Component\Filesystem\Filesystem;
 
 class App extends BaseApplication
@@ -26,7 +26,7 @@ class App extends BaseApplication
 
     public function getCommands(): array
     {
-        $config = new PHPManagerConfiguration();
+        $config = new Configuration();
         $fileSystem = new Filesystem();
         return [
             new InstallCommand(

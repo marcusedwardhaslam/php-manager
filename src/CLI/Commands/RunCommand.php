@@ -3,9 +3,9 @@
 namespace PHPManager\PHPManager\CLI\Commands;
 
 use Fidry\Console\Command\Command;
-use Fidry\Console\Command\Configuration;
+use Fidry\Console\Command\Configuration as CommandConfiguration;
 use Fidry\Console\IO;
-use PHPManager\PHPManager\Lib\PHPManagerConfiguration;
+use PHPManager\PHPManager\Lib\Configuration;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\PhpProcess;
@@ -17,14 +17,14 @@ class RunCommand implements Command
     const string BINARY = 'binary';
     const POSARGS = 'posargs';
 
-    function __construct(private PHPManagerConfiguration $config)
+    function __construct(private Configuration $config)
     {
 
     }
 
-    public function getConfiguration(): Configuration
+    public function getConfiguration(): CommandConfiguration
     {
-        return new Configuration(
+        return new CommandConfiguration(
             'run',
             'Runs a command in the php-manager environment',
             'This will provide help to the user',

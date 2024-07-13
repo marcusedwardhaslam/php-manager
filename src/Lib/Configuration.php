@@ -2,7 +2,7 @@
 
 namespace PHPManager\PHPManager\Lib;
 
-final readonly class PHPManagerConfiguration
+final readonly class Configuration
 {
     function __construct(
         public string $phpManagerDirectory = '.php-manager',
