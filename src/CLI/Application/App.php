@@ -27,7 +27,7 @@ class App extends BaseApplication
     public function getCommands(): array
     {
         $config = new PHPManagerConfiguration();
-        $fileSystem = new FileSystem();
+        $fileSystem = new Filesystem();
         return [
             new InstallCommand(
                 $config,
