@@ -3,7 +3,7 @@
 namespace PHPManager\PHPManager\CLI\Commands;
 
 use Fidry\Console\Command\Command;
-use Fidry\Console\Command\Configuration;
+use Fidry\Console\Command\Configuration as CommandConfiguration;
 use Fidry\Console\IO;
 use Fidry\CpuCoreCounter\CpuCoreCounter;
 use GuzzleHttp\Client;
@@ -13,6 +13,7 @@ use PHPManager\PHPManager\Lib\Installers\ComposerInstaller\ComposerProvider;
 use PHPManager\PHPManager\Lib\Installers\PHPInstaller\PHPInstaller;
 use PHPManager\PHPManager\Lib\Installers\PHPInstaller\PHPInstallerExecutor;
 use PHPManager\PHPManager\Lib\Installers\PHPInstaller\PHPSrcProvider;
+use PHPManager\PHPManager\Lib\Configuration;
 use Safe\Exceptions\DirException;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
@@ -26,14 +27,16 @@ class InstallCommand implements Command
     private const MAX_CORE_COUNT_OPTION = 'max-core-count';
 
     public function __construct(
-        private readonly Filesystem $filesystem,
+        private Configuration           $configuration,
+        private readonly Filesystem     $filesystem,
         private readonly CpuCoreCounter $coreCounter,
-    ) {
+    )
+    {
     }
 
-    public function getConfiguration(): Configuration
+    public function getConfiguration(): CommandConfiguration
     {
-        return new Configuration(
+        return new CommandConfiguration(
             'install',
             'Installs a local version of PHP, Composer and project dependencies',
             'This will provide help to the user',
@@ -65,8 +68,8 @@ class InstallCommand implements Command
         );
 
         $phpInstaller = new PHPInstaller(
-            $cwd .'/dist/build',
-            $cwd .'/.php-manager',
+            $cwd . '/' . $this->configuration->distDirectory . '/build',
+            $cwd . '/' . $this->configuration->phpManagerDirectory,
             $this->filesystem,
             new Client(),
             new PHPSrcProvider(),
@@ -75,8 +78,8 @@ class InstallCommand implements Command
         $phpInstaller->install($io);
 
         $composerInstaller = new ComposerInstaller(
-            $cwd .'/dist/composer',
-            $cwd .'/.php-manager',
+            $cwd . '/' . $this->configuration->distDirectory . '/composer',
+            $cwd . '/' . $this->configuration->phpManagerDirectory,
             $this->filesystem,
             new Client(),
             new ComposerProvider(),

@@ -7,6 +7,8 @@ use Fidry\CpuCoreCounter\CpuCoreCounter;
 use Fidry\CpuCoreCounter\Finder\FinderRegistry;
 use PHPManager\PHPManager\CLI\Commands\InstallCommand;
 use PHPManager\PHPManager\CLI\Commands\RunCommand;
+use PHPManager\PHPManager\CLI\Commands\UninstallCommand;
+use PHPManager\PHPManager\Lib\Configuration;
 use Symfony\Component\Filesystem\Filesystem;
 
 class App extends BaseApplication
@@ -24,13 +26,21 @@ class App extends BaseApplication
 
     public function getCommands(): array
     {
+        $config = new Configuration();
+        $fileSystem = new Filesystem();
         return [
             new InstallCommand(
-                new Filesystem(
-                ),
+                $config,
+                $fileSystem,
                 new CpuCoreCounter(FinderRegistry::getDefaultLogicalFinders()),
             ),
-            new RunCommand(),
+            new RunCommand(
+                $config,
+            ),
+            new UninstallCommand(
+                $config,
+                $fileSystem,
+            ),
         ];
     }
 }
