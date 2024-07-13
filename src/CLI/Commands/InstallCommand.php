@@ -68,8 +68,8 @@ class InstallCommand implements Command
         );
 
         $phpInstaller = new PHPInstaller(
-            $cwd . $this->configuration->distDirectory . '/build',
-            $cwd . $this->configuration->phpManagerDirectory,
+            $cwd . '/' . $this->configuration->distDirectory . '/build',
+            $cwd . '/' . $this->configuration->phpManagerDirectory,
             $this->filesystem,
             new Client(),
             new PHPSrcProvider(),
@@ -78,8 +78,8 @@ class InstallCommand implements Command
         $phpInstaller->install($io);
 
         $composerInstaller = new ComposerInstaller(
-            $cwd . $this->configuration->distDirectory . '/composer',
-            $cwd . $this->configuration->phpManagerDirectory,
+            $cwd . '/' . $this->configuration->distDirectory . '/composer',
+            $cwd . '/' . $this->configuration->phpManagerDirectory,
             $this->filesystem,
             new Client(),
             new ComposerProvider(),
