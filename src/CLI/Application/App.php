@@ -40,7 +40,6 @@ class App extends BaseApplication
             new UninstallCommand(
                 $config,
                 $fileSystem,
-                new Filesystem(),
             ),
         ];
     }
