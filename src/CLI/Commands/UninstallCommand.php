@@ -14,9 +14,11 @@ use function Safe\getcwd;
 
 class UninstallCommand implements Command
 {
-    function __construct(private Configuration $config, private Filesystem $filesystem)
+    function __construct(
+        private Configuration $config,
+        private Filesystem    $filesystem,
+    )
     {
-
     }
 
     public function getConfiguration(): CommandConfiguration
